@@ -1,4 +1,4 @@
-# How to do a sprint
+### How to do a sprint
 - Write acceptance criteria at the start of each iteration
 - Pick stories
 - Re-estimate the story points
