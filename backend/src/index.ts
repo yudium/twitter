@@ -1,11 +1,22 @@
 const express = require("express");
 const app = express();
-const port = 5555;
+const port = 5055;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
+app.get("/status", (req, res) => {
+  res.send(200);
+});
+
+app.post("/tweet", (req, res) => {
+  const tweet = "This is a tweet";
+  res.json({ id: "1" });
+});
+
+
+app.get("/tweet/:id", (req, res) => {
+  const tweet = "This is a tweet";
+  res.json({ tweet });
 });
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`listening on port ${port}`);
 });
