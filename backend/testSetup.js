@@ -9,7 +9,9 @@ beforeAll(async () => {
       if (response.status === 200) {
         return;
       }
-    } catch (e) {}
+    } catch (e) {
+        //
+    }
     await delay(DELAY);
     retries -= 1;
   }
