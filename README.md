@@ -9,3 +9,14 @@
 - INVEST: Independent, Negotiable, Valuable, Estimable, Small, Testable (+ Deployable).
 - Pick a story that has average complexity that is 3 point.
 - Unknowns eliminated throuh use of spikes, a research story.
+
+### How to Run Development
+
+#### Backend
+- `$ cd backend`
+- `$ npm run start`
+- `$ npm run test:integration`
+
+#### Frontend
+- `$ cd frontend`
+- `$ npm run dev`
