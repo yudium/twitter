@@ -195,4 +195,6 @@ module.exports = {
   // watchman: true,
 
   testTimeout: 10000,
+
+  setupFilesAfterEnv: ['./testSetup.js'],
 };
