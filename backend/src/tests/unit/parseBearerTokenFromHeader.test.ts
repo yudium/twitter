@@ -1,13 +1,13 @@
-import { parseAccessTokenFromHeader } from "../../parseAccessTokenFromHeader";
+import { parseBearerTokenFromHeader } from "../../parseBearerTokenFromHeader";
 
 function expectNull(headers: unknown) {
-  const result = parseAccessTokenFromHeader(headers);
+  const result = parseBearerTokenFromHeader(headers);
   expect(result).toBeNull();
 }
 
-describe(parseAccessTokenFromHeader.name, () => {
+describe(parseBearerTokenFromHeader.name, () => {
   it("returns access token", () => {
-    const result = parseAccessTokenFromHeader({
+    const result = parseBearerTokenFromHeader({
       authorization: "Bearer accessToken",
     });
     expect(result).toBe("accessToken");

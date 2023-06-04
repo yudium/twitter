@@ -2,7 +2,7 @@
  * Parses the access token from the headers object.
  * Currently only supports the Bearer token type.
  */
-export function parseAccessTokenFromHeader(headers: unknown) {
+export function parseBearerTokenFromHeader(headers: unknown) {
   if (headers === null) return null;
   if (typeof headers !== "object") return null;
   if (!hasAuthorizationProperty(headers)) return null;
