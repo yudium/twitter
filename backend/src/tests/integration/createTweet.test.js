@@ -10,17 +10,15 @@ describe("When tweet is valid", () => {
     tweet: "This is a tweet",
   };
 
-  it("returns 200 response", async () => {
+  it("creates tweet", async () => {
     const response = await sendPost("/tweet", payload);
+
     expect(response.status).toBe(200);
     expect(typeof response.body.id).toBe("string");
-  });
 
-  it("creates tweet", async () => {
-    await sendPost("/tweet", payload);
-    const response = await sendGet("/tweets");
-    expect(response.body.tweets.length).toBe(1);
-    expect(response.body.tweets[0].tweet).toBe(payload.tweet);
+    const tweets = await sendGet("/tweets");
+    expect(tweets.body.tweets.length).toBe(1);
+    expect(tweets.body.tweets[0].tweet).toBe(payload.tweet);
   });
 });
 
@@ -29,20 +27,19 @@ describe("When tweet is empty or missing", () => {
     tweet: "",
   };
 
-  it("returns 400 response", async () => {
-    let response = await request("localhost:5055").post("/tweet").send(payload);
+  it("returns 400 response and do not create empty tweet", async () => {
+    const response = await request("localhost:5055")
+      .post("/tweet")
+      .send(payload);
     expectResponse(response, 400, {
       message: "Invalid tweet",
       data: {
         tweet: ["Tweet is required"],
       },
     });
-  });
 
-  it("does not create empty tweet", async () => {
-    let response = await request("localhost:5055").post("/tweet").send(payload);
-    response = await request("localhost:5055").get(`/tweets`);
-    expectResponse(response, 200, {
+    const tweets = await request("localhost:5055").get(`/tweets`);
+    expectResponse(tweets, 200, {
       tweets: [],
     });
   });
