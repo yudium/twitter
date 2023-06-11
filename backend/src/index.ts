@@ -1,10 +1,17 @@
 import express from "express";
 import bodyParser from "body-parser";
 import nanoid from "nanoid";
+import cors from "cors";
 const app = express();
 const port = 5055;
 
 app.use(bodyParser.json());
+
+app.use(
+  cors({
+    origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
+  })
+);
 
 let tweets = [];
 
