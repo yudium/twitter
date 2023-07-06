@@ -1,9 +1,9 @@
 /*
- * For a detailed explanation regarding each configuration property, visit:
+ * For a detailed explanation regarding each configuration property and type check, visit:
  * https://jestjs.io/docs/configuration
  */
 
-module.exports = {
+export default {
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -12,6 +12,10 @@ module.exports = {
 
   // The directory where Jest should store its cached dependency information
   // cacheDirectory: "/private/var/folders/0r/gj60d6yn01dc_qqy2231p7ph0000gn/T/jest_dx",
+
+  preset: "ts-jest",
+
+  testEnvironment: "node",
 
   // Automatically clear mock calls, instances, contexts and results before every test
   clearMocks: true,
@@ -31,7 +35,7 @@ module.exports = {
   // ],
 
   // Indicates which provider should be used to instrument code for coverage
-  coverageProvider: "v8",
+  // coverageProvider: "babel",
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
@@ -154,9 +158,9 @@ module.exports = {
 
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    "**/integration/**/*.test.js"
-    // "**/__tests__/**/*.[jt]s?(x)",
-    // "**/?(*.)+(spec|test).[tj]s?(x)"
+    "**/unit/**/*.test.ts",
+    //   "**/__tests__/**/*.[jt]s?(x)",
+    //   "**/?(*.)+(spec|test).[tj]s?(x)"
   ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
@@ -193,8 +197,4 @@ module.exports = {
 
   // Whether to use watchman for file crawling
   // watchman: true,
-
-  testTimeout: 10000,
-
-  setupFilesAfterEnv: ['./integration.testSetup.js'],
 };

@@ -1,11 +1,8 @@
-import React from 'react'
+import { TweetEditor } from "./TweetEditor";
+import "./global.css";
 
 function App() {
-  return (
-    <>
-      Hello World
-    </>
-  )
+  return <TweetEditor />;
 }
 
-export default App
+export default App;
