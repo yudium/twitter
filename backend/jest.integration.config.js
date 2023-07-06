@@ -196,5 +196,5 @@ module.exports = {
 
   testTimeout: 10000,
 
-  setupFilesAfterEnv: ['./testSetup.js'],
+  setupFilesAfterEnv: ['./integration.testSetup.js'],
 };

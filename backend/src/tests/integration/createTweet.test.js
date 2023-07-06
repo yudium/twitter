@@ -1,5 +1,7 @@
 const request = require("supertest");
 
+const HOST = "localhost:5055";
+
 afterEach(async () => {
   const response = await sendDelete("/tweets");
   expect(response.status).toBe(200);
@@ -28,9 +30,7 @@ describe("When tweet is empty or missing", () => {
   };
 
   it("returns 400 response and do not create empty tweet", async () => {
-    const response = await request("localhost:5055")
-      .post("/tweet")
-      .send(payload);
+    const response = await request(HOST).post("/tweet").send(payload);
     expectResponse(response, 400, {
       message: "Invalid tweet",
       data: {
@@ -38,7 +38,7 @@ describe("When tweet is empty or missing", () => {
       },
     });
 
-    const tweets = await request("localhost:5055").get(`/tweets`);
+    const tweets = await request(HOST).get(`/tweets`);
     expectResponse(tweets, 200, {
       tweets: [],
     });
@@ -46,15 +46,15 @@ describe("When tweet is empty or missing", () => {
 });
 
 async function sendPost(endpoint, payload) {
-  return await request("localhost:5055").post(endpoint).send(payload);
+  return await request(HOST).post(endpoint).send(payload);
 }
 
 async function sendGet(endpoint) {
-  return await request("localhost:5055").get(endpoint);
+  return await request(HOST).get(endpoint);
 }
 
 async function sendDelete(endpoint, payload) {
-  return await request("localhost:5055").delete(endpoint).send(payload);
+  return await request(HOST).delete(endpoint).send(payload);
 }
 
 function expectResponse(response, code, body) {

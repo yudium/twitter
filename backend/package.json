@@ -1,10 +1,10 @@
 {
-  "name": "backend-i18n",
+  "name": "backend",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --exec ts-node-dev -r tsconfig-paths/register src/index",
+    "start": "ts-node-dev -r tsconfig-paths/register src/index",
     "test:integration": "jest --watchAll --config jest.integration.config.js",
     "test:unit": "jest --watchAll --config jest.unit.config.ts"
   },

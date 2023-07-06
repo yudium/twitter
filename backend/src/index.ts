@@ -7,9 +7,11 @@ const port = 5055;
 
 app.use(bodyParser.json());
 
+const FRONTEND_HOST = "127.0.0.1:5173";
+
 app.use(
   cors({
-    origin: ["http://127.0.0.1:5173", "http://localhost:5173"],
+    origin: ["http://" + FRONTEND_HOST, "http://" + FRONTEND_HOST],
   })
 );
 
