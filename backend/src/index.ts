@@ -1,13 +1,16 @@
-import express from "express";
 import bodyParser from "body-parser";
-import nanoid from "nanoid";
 import cors from "cors";
+import express from "express";
+import { CreateTweetRequestHandler } from "./RequestHandlers/CreateTweetRequestHandler";
+import { TweetRepo } from "./repositories/tweetRepo";
 const app = express();
 const port = 5055;
 
 app.use(bodyParser.json());
 
 const FRONTEND_HOST = "127.0.0.1:5173";
+
+export const tweetRepo = new TweetRepo();
 
 app.use(
   cors({
@@ -21,25 +24,8 @@ app.get("/status", (req, res) => {
   res.send(200);
 });
 
-app.post("/tweet", (req, res) => {
-  if (isStringEmpty(req.body.tweet)) {
-    res.status(400).json({
-      message: "Invalid tweet",
-      data: {
-        tweet: ["Tweet is required"],
-      },
-    });
-    return;
-  }
-
-  const tweet = {
-    id: nanoid(),
-    tweet: req.body.tweet,
-  };
-
-  tweets.push(tweet);
-
-  res.status(200).json({ id: tweet.id });
+app.post("/tweet", async (req, res) => {
+  await new CreateTweetRequestHandler(req, res).execute();
 });
 
 app.get("/tweets", (req, res) => {
@@ -54,7 +40,3 @@ app.delete("/tweets", (req, res) => {
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
-
-function isStringEmpty(value: unknown): boolean {
-  return typeof value === "string" && value.trim() === "";
-}

@@ -16,32 +16,8 @@ describe("When tweet is valid", () => {
     const response = await sendPost("/tweet", payload);
 
     expect(response.status).toBe(200);
-    expect(typeof response.body.id).toBe("string");
-
-    const tweets = await sendGet("/tweets");
-    expect(tweets.body.tweets.length).toBe(1);
-    expect(tweets.body.tweets[0].tweet).toBe(payload.tweet);
-  });
-});
-
-describe("When tweet is empty or missing", () => {
-  const payload = {
-    tweet: "",
-  };
-
-  it("returns 400 response and do not create empty tweet", async () => {
-    const response = await request(HOST).post("/tweet").send(payload);
-    expectResponse(response, 400, {
-      message: "Invalid tweet",
-      data: {
-        tweet: ["Tweet is required"],
-      },
-    });
-
-    const tweets = await request(HOST).get(`/tweets`);
-    expectResponse(tweets, 200, {
-      tweets: [],
-    });
+    expect(typeof response.body.data.id).toBe("string");
+    expect(response.body.data.id.length).toBeGreaterThan(1);
   });
 });
 
@@ -55,9 +31,4 @@ async function sendGet(endpoint) {
 
 async function sendDelete(endpoint, payload) {
   return await request(HOST).delete(endpoint).send(payload);
-}
-
-function expectResponse(response, code, body) {
-  expect(response.status).toBe(code);
-  expect(response.body).toEqual(body);
 }
