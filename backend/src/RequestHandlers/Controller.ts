@@ -3,7 +3,6 @@ import { ValidationError } from "../ValidationError";
 import { Request } from "./Request";
 import { Response } from "./Response";
 
-// RequestBody here needed for type casting in getBody method
 export abstract class Controller {
   constructor(protected req: Request, protected res: Response) {}
 

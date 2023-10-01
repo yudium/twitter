@@ -5,6 +5,11 @@ export class ValidationError extends Error {
     super("Validation error");
   }
 
+  /**
+   * Add or append a new error message to a field
+   * @param field - new field or existing one
+   * @param message - new message to add
+   */
   addError(field: string, message: string) {
     this.errors[field] = this.errors[field] || [];
     this.errors[field].push(message);

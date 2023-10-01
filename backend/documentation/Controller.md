@@ -1,8 +1,8 @@
-# Request Handler
+# Controller
 
 ## Problem
 
-previously we have code like this
+Previously we have code like this
 
 ```js
 app.post("/tweet", (req, res) => {
@@ -27,4 +27,4 @@ app.post("/tweet", (req, res) => {
 });
 ```
 
-then we can see in future that there a lot of request handlers that has same pattern: if validation fail then returns 400 response otherwise returns 200 response. To avoid duplication to become expensive when changes need to be made in future or testing it again and again hence it is better to pull them into an abstraction.
+In future that there are going a lot of request handlers that has same pattern: if validation fail then returns 400 response otherwise returns 200 response. To avoid duplication becomes expensive and reduce unit test hence decided we are going to to group them in an abstraction, Controller class.

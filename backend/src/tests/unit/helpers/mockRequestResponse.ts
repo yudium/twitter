@@ -1,6 +1,6 @@
 import { Request } from "../../../RequestHandlers/Request";
 
-export class MockRequest extends Request {
+class MockRequest extends Request {
   private body: Record<string, any> = {};
   private params: Record<string, any> = {};
   private query: Record<string, any> = {};
@@ -32,4 +32,24 @@ export class MockRequest extends Request {
   setQuery(query: Record<string, any>) {
     this.query = query;
   }
+}
+
+function getMockResponse() {
+  return {
+    success: jest.fn(),
+    validationError: jest.fn(),
+    internalError: jest.fn(),
+  };
+}
+
+/**
+ * getMockResponse() and MockRequest are using different patterns, to avoid
+ * confusion to the clients, we wrap them in a single function to not expose the way
+ * they created.
+ */
+export function mockRequestResponse() {
+  return {
+    req: new MockRequest(),
+    res: getMockResponse(),
+  };
 }

@@ -1,8 +1,7 @@
 import { Controller } from "../../RequestHandlers/Controller";
 import { isString } from "../../RequestValidator/isString";
 import { ValidationError } from "../../ValidationError";
-import { MockRequest } from "./helpers/MockRequest";
-import { getMockResponse } from "./helpers/getMockResponse";
+import { mockRequestResponse } from "./helpers/mockRequestResponse";
 
 describe("when the controller returns success data", () => {
   class SuccessDataReturnedStubController extends Controller {
@@ -16,8 +15,7 @@ describe("when the controller returns success data", () => {
   }
 
   it("returns 200 response with that data", async () => {
-    const res = getMockResponse();
-    const req = new MockRequest();
+    const { req, res } = mockRequestResponse();
     req.setBody({ content: "new tweet" });
 
     await new SuccessDataReturnedStubController(req, res).execute();
@@ -38,8 +36,7 @@ describe("when the controller returns success without data", () => {
   }
 
   it("returns 200 response with no data", async () => {
-    const res = getMockResponse();
-    const req = new MockRequest();
+    const { req, res } = mockRequestResponse();
 
     await new SuccessWithNoDataReturnedStubController(req, res).execute();
 
@@ -59,8 +56,7 @@ describe("when the controller throws unexpected error", () => {
   }
 
   it("returns 500 error", async () => {
-    const res = getMockResponse();
-    const req = new MockRequest();
+    const { req, res } = mockRequestResponse();
 
     await new UnexpectedErrorStubController(req, res).execute();
 
@@ -83,8 +79,7 @@ describe("when the controller throws validation error on request level", () => {
   }
 
   it("returns 400 error", async () => {
-    const res = getMockResponse();
-    const req = new MockRequest();
+    const { req, res } = mockRequestResponse();
 
     await new ValidationErrorStubController(req, res).execute();
 
@@ -108,8 +103,7 @@ describe("when the controller throws validation error on use case level", () => 
   }
 
   it("returns 400 error", async () => {
-    const res = getMockResponse();
-    const req = new MockRequest();
+    const { req, res } = mockRequestResponse();
 
     await new ValidationErrorStubController(req, res).execute();
 

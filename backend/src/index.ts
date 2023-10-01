@@ -5,15 +5,21 @@ import { ExpressRequest } from "./RequestHandlers/ExpressRequest";
 import { ExpressResponse } from "./RequestHandlers/ExpressResponse";
 import { TweetRepo } from "./repositories/tweetRepo";
 import { CreateTweetController } from "./useCases/CreateTweet/CreateTweetController";
+
+/**
+ * Instantiate the repositories to be used by the app
+ */
+export const tweetRepo = new TweetRepo();
+
+/**
+ * Routes
+ */
 const app = express();
 const port = 5055;
 
 app.use(bodyParser.json());
 
 const FRONTEND_HOST = "127.0.0.1:5173";
-
-export const tweetRepo = new TweetRepo();
-
 app.use(
   cors({
     origin: ["http://" + FRONTEND_HOST, "http://" + FRONTEND_HOST],
