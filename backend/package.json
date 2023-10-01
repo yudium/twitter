@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev -r tsconfig-paths/register src/index",
-    "test:integration": "jest --watchAll --config jest.integration.config.js",
-    "test:unit": "jest --watchAll --config jest.unit.config.ts"
+    "test:integration": "jest --config jest.integration.config.js",
+    "test:unit": "jest --config jest.unit.config.ts"
   },
   "author": "",
   "license": "ISC",
