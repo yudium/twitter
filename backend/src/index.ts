@@ -1,8 +1,10 @@
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
-import { CreateTweetRequestHandler } from "./RequestHandlers/CreateTweetRequestHandler";
+import { ExpressRequest } from "./RequestHandlers/ExpressRequest";
+import { ExpressResponse } from "./RequestHandlers/ExpressResponse";
 import { TweetRepo } from "./repositories/tweetRepo";
+import { CreateTweetController } from "./useCases/CreateTweet/CreateTweetController";
 const app = express();
 const port = 5055;
 
@@ -24,8 +26,11 @@ app.get("/status", (req, res) => {
   res.send(200);
 });
 
-app.post("/tweet", async (req, res) => {
-  await new CreateTweetRequestHandler(req, res).execute();
+app.post("/tweet", async (req, res): Promise<void> => {
+  await new CreateTweetController(
+    new ExpressRequest(req),
+    new ExpressResponse(res)
+  ).execute();
 });
 
 app.get("/tweets", (req, res) => {

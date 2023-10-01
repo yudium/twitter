@@ -1,6 +1,17 @@
 export class ValidationError extends Error {
-  constructor(private errors: Record<string, string[]>) {
+  private errors: Record<string, string[]> = {};
+
+  constructor() {
     super("Validation error");
+  }
+
+  addError(field: string, message: string) {
+    this.errors[field] = this.errors[field] || [];
+    this.errors[field].push(message);
+  }
+
+  totalErrors() {
+    return Object.keys(this.errors).length;
   }
 
   getErrors() {

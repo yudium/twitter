@@ -1,29 +1,25 @@
-import express from "express";
+import { Request } from "../RequestHandlers/Request";
+import { ValidationError } from "../ValidationError";
 
-type Error = Record<string, string[]>;
+export type ErrorDetails = Record<string, string[]>;
 
 export function validateRequest(
-  req: express.Request,
+  req: Request,
   schema: Record<string, any>
-): {
-  has_error: boolean;
-  errors: Error;
-} {
-  const errors: Error = {};
+): void {
+  const error = new ValidationError();
 
   for (const [field, rules] of Object.entries(schema)) {
-    const value = req.body[field];
+    const value = req.getBody<unknown>(field);
     for (const rule of rules) {
       const error_message = rule(value);
       if (error_message) {
-        errors[field] = errors[field] || [];
-        errors[field].push(error_message);
+        error.addError(field, error_message);
       }
     }
   }
 
-  return {
-    has_error: Object.keys(errors).length > 0,
-    errors,
-  };
+  if (error.totalErrors() > 0) {
+    throw error;
+  }
 }
