@@ -1,14 +1,25 @@
-import express from "express";
 import bodyParser from "body-parser";
-import nanoid from "nanoid";
 import cors from "cors";
+import express from "express";
+import { ExpressRequest } from "./RequestHandlers/ExpressRequest";
+import { ExpressResponse } from "./RequestHandlers/ExpressResponse";
+import { TweetRepo } from "./repositories/tweetRepo";
+import { CreateTweetController } from "./useCases/CreateTweet/CreateTweetController";
+
+/**
+ * Instantiate the repositories to be used by the app
+ */
+export const tweetRepo = new TweetRepo();
+
+/**
+ * Routes
+ */
 const app = express();
 const port = 5055;
 
 app.use(bodyParser.json());
 
 const FRONTEND_HOST = "127.0.0.1:5173";
-
 app.use(
   cors({
     origin: ["http://" + FRONTEND_HOST, "http://" + FRONTEND_HOST],
@@ -21,25 +32,11 @@ app.get("/status", (req, res) => {
   res.send(200);
 });
 
-app.post("/tweet", (req, res) => {
-  if (isStringEmpty(req.body.tweet)) {
-    res.status(400).json({
-      message: "Invalid tweet",
-      data: {
-        tweet: ["Tweet is required"],
-      },
-    });
-    return;
-  }
-
-  const tweet = {
-    id: nanoid(),
-    tweet: req.body.tweet,
-  };
-
-  tweets.push(tweet);
-
-  res.status(200).json({ id: tweet.id });
+app.post("/tweet", async (req, res): Promise<void> => {
+  await new CreateTweetController(
+    new ExpressRequest(req),
+    new ExpressResponse(res)
+  ).execute();
 });
 
 app.get("/tweets", (req, res) => {
@@ -54,7 +51,3 @@ app.delete("/tweets", (req, res) => {
 app.listen(port, () => {
   console.log(`listening on port ${port}`);
 });
-
-function isStringEmpty(value: unknown): boolean {
-  return typeof value === "string" && value.trim() === "";
-}
