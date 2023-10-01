@@ -10,6 +10,7 @@ describe(parseBearerTokenFromHeader.name, () => {
     const result = parseBearerTokenFromHeader({
       authorization: "Bearer accessToken",
     });
+    expect(true).toBe(false);
     expect(result).toBe("accessToken");
   });
 
